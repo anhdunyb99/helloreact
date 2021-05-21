@@ -3,8 +3,8 @@ import './App.css';
 import Todo from './components/Todo'
 import './styles/main.css'
 import Login from "./components/login";
-
- import { auth, storeUserInfo } from "./lib/firebase";
+import Upload from "./components/Upload";
+ import { auth, storeUserInfo ,updateUser} from "./lib/firebase";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,6 +20,9 @@ function App() {
        setUser(newUser);
      });
    }, []);
+    const handleImageChanged = async downlodUrl => {
+    await updateUser(user, downlodUrl);
+  }
 
    const logout = () => {
      auth.signOut();
@@ -30,7 +33,7 @@ function App() {
        return (
          <div class="navbar-end">
            <div class="navbar-item">
-           
+           <Upload userImage={user.image} onSletctedImage={handleImageChanged} />
              {user.name}
            </div>
            <div class="navbar-item">
